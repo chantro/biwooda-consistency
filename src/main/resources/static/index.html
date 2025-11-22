@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>우산함 실시간 데모</title>
+  <style>
+    body { font-family: sans-serif; display: flex; gap: 24px; padding: 16px; }
+    .panel { border: 1px solid #ccc; padding: 12px; border-radius: 8px; width: 50%; box-sizing: border-box; }
+    h2 { margin-top: 0; }
+    label { display: block; margin: 4px 0; }
+    input { padding: 4px; margin-top: 2px; }
+    button { margin-top: 8px; padding: 4px 8px; cursor: pointer; }
+    table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+    th, td { border: 1px solid #ddd; padding: 4px 6px; text-align: center; font-size: 12px; }
+    #log { white-space: pre-wrap; font-size: 12px; background: #111; color: #0f0; padding: 8px; height: 260px; overflow-y: auto; }
+  </style>
+</head>
+<body>
+<!-- 왼쪽: 제어/조회 -->
+<div class="panel">
+  <h2>우산함 제어 패널</h2>
+
+  <section>
+    <h3>1. 우산함 생성</h3>
+    <label>
+      우산 총 개수 (비우면 기본값 사용):
+      <input type="number" id="create-total" min="1" placeholder="예: 8"/>
+    </label>
+    <button onclick="createLocker()">우산함 생성</button>
+  </section>
+
+  <hr/>
+
+  <section>
+    <h3>2. 우산함 ID 선택</h3>
+    <label>
+      락커 ID:
+      <input type="number" id="locker-id" min="1" placeholder="예: 1"/>
+    </label>
+    <button onclick="loadLockers()">전체 목록 새로고침</button>
+  </section>
+
+  <section>
+    <h3>3. 상태 변경</h3>
+    <button onclick="rentLocker()">대여 (rent)</button>
+    <button onclick="returnLocker()">반납 (return)</button>
+    <button onclick="brokenLocker()">고장 처리 (broken)</button>
+    <br/>
+    <label>
+      수리 후 남은 우산 개수:
+      <input type="number" id="repair-rest" min="0" placeholder="예: 5"/>
+    </label>
+    <button onclick="repairLocker()">수리 (repair)</button>
+    <hr/>
+    <button onclick="deleteLocker()" style="color:red;">우산함 삭제 (DELETE)</button>
+  </section>
+
+  <section>
+    <h3>4. 현재 우산함 목록</h3>
+    <div id="lockers-table"></div>
+  </section>
+</div>
+
+<!-- 오른쪽: SSE 로그 -->
+<div class="panel">
+  <h2>실시간 변경 로그 (SSE)</h2>
+  <div id="log"></div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
+
